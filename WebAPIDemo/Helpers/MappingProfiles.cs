@@ -8,8 +8,8 @@ namespace WebAPIDemo.Helpers
     {
         public MappingProfiles()
         {
-            CreateMap<AccountMember, AccountMemberDto>();
-            CreateMap<AccountMemberDto, AccountMember>();
+            CreateMap<AccountMember, AccountMemberDto>().ReverseMap();
+            //CreateMap<AccountMemberDto, AccountMember>();
 
         }
     }
