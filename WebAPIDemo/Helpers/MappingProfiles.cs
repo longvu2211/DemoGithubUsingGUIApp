@@ -10,6 +10,7 @@ namespace WebAPIDemo.Helpers
         {
             CreateMap<AccountMember, AccountMemberDto>().ReverseMap();
             CreateMap<ArtTattooService, ArtTattooServiceDto>().ReverseMap(); 
+            CreateMap<ArtTattooStyle, ArtTattooStyleDto>().ReverseMap();
         }
     }
 }
