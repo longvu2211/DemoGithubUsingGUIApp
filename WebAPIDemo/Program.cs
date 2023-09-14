@@ -20,6 +20,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IAccountMemberRepo, AccountMemberRepo>();
 builder.Services.AddScoped<IArtTattooServiceRepo, ArtTattooServiceRepo>();
+builder.Services.AddScoped<IArtTattooStyleRepo, ArtTattooStyleRepo>();
 
 var app = builder.Build();
 
