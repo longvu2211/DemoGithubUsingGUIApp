@@ -12,6 +12,7 @@ namespace WebAPIDemo.Controllers
     {
         private readonly IAccountMemberRepo _accountMemberRepo;
         private readonly IMapper _mapper;
+        private static readonly int CUSTOMER_ROLE = 4;
 
         public AccountMemberController(IAccountMemberRepo accountMemberRepo, IMapper mapper)
         {
@@ -29,7 +30,7 @@ namespace WebAPIDemo.Controllers
             return Ok(mappedAccounts);
         }
 
-        [HttpGet("account/{id}")]
+        [HttpGet("accounts/{id}")]
         [ProducesResponseType(200, Type = typeof(AccountMember))]
         [ProducesResponseType(400)]
         public async Task<ActionResult<AccountMember>> GetAccountMember(int id)
@@ -39,6 +40,31 @@ namespace WebAPIDemo.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var mappedAccount = _mapper.Map<AccountMemberDto>(account);
             return Ok(mappedAccount);
+        }
+
+        // modify it in the future, using async 
+        [HttpPost("account")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateAccountMember([FromBody] AccountMemberDto accountCreate)
+        {
+            if (accountCreate == null) return BadRequest(ModelState);
+            var accountDuplicate = _accountMemberRepo.GetAccountMembers()
+                .Result.FirstOrDefault(acc => acc.AccountId == accountCreate.AccountId);
+            if (accountDuplicate != null)
+            {
+                ModelState.AddModelError("", "Account already exists!");
+                return StatusCode(422, ModelState);
+            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var accountMap = _mapper.Map<AccountMember>(accountCreate);
+            accountMap.Role = CUSTOMER_ROLE;
+            if (!_accountMemberRepo.CreateAccountMember(accountMap))
+            {
+                ModelState.AddModelError("", "Something went wrong saving the account!");
+                return StatusCode(500, ModelState);
+            }
+            return Ok("Create successfully!");
         }
     }
 }

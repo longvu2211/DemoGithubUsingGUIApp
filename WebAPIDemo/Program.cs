@@ -19,6 +19,8 @@ builder.Services.AddDbContext<ArtTattoo2023DbContext>(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IAccountMemberRepo, AccountMemberRepo>();
+builder.Services.AddScoped<IArtTattooServiceRepo, ArtTattooServiceRepo>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

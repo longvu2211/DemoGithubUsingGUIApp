@@ -6,5 +6,7 @@ namespace WebAPIDemo.IRepositories
     {
         Task<ICollection<AccountMember>> GetAccountMembers();
         Task<AccountMember> GetAccountMember(int id);
+        bool CreateAccountMember(AccountMember accountMember);
+        bool Save();
     }
 }

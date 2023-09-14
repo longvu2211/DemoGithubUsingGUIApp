@@ -9,8 +9,7 @@ namespace WebAPIDemo.Helpers
         public MappingProfiles()
         {
             CreateMap<AccountMember, AccountMemberDto>().ReverseMap();
-            //CreateMap<AccountMemberDto, AccountMember>();
-
+            CreateMap<ArtTattooService, ArtTattooServiceDto>().ReverseMap(); 
         }
     }
 }
